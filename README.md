@@ -2,13 +2,7 @@
 A desktop app to analyze and evaluate students in all of your classes!
 
 Technologies:
-- Python 3
-- PyQt5
-- Matplotlib
-- SQLite
-- xlrd (for Excel files)
-- Pandas
-- Numpy
+Python 3 - PyQt5 - Matplotlib - SQLite3 - xlrd (for Excel files) - Pandas - Numpy
 
 ### Tab 1:
 This is the analysis section of the app. You can upload as many SQLite tables and .xlsx files as you want, as long as the Excel paths are stored in the SA.db file (you can store the paths in Tab 2). You can analyze students and their grades using three data visualization tools: you can utilize bar graphs, line graphs, and pie charts, depending on what you want to analyze. You also have the option to visualize the mean of the grades/scores you are analyzing and compare it to the grades of individual students.
