@@ -68,7 +68,8 @@ class Naming_Tables(object):
 
     def new_table(self, Dialog, tuple, dn):
         '''Replaces the 'Sheet1' table with an identical table, but with a different name, chosen by the user'''
-        new_name = self.rename_input.text()
+        input = self.rename_input.text()
+        new_name = input.replace(" ", "_")
         with conn: #must create a new table, rename the columns with desired name changes, then copy the data from the old table into the new table, drop the old table, then rename this table to the old table's name
             c.execute('CREATE TABLE IF NOT EXISTS backup' + str(tuple)) #creates the correct, corresponding column names of the "new" table
             c.execute("INSERT INTO backup SELECT * FROM {}".format(dn))
@@ -77,15 +78,20 @@ class Naming_Tables(object):
 
     def enter_name(self, Dialog):
         '''Executes the new_table function with a user-chosen name'''
-        column_name_list = []
-        default_name = SQL.readable(str(self.names[-1]))
-        c.execute("SELECT * FROM {}".format(default_name))
-        column_names = c.description
-        for name in column_names:
-            column_name_list.append(name[0])
-        column_names = tuple(column_name_list)
-        self.new_table(Dialog, column_names, default_name)
-        Dialog.close()
+        try:
+            if self.rename_input.text() == "":
+                raise ValueError
+            column_name_list = []
+            default_name = SQL.readable(str(self.names[-1]))
+            c.execute("SELECT * FROM {}".format(default_name))
+            column_names = c.description
+            for name in column_names:
+                column_name_list.append(name[0])
+            column_names = tuple(column_name_list)
+            self.new_table(Dialog, column_names, default_name)
+            Dialog.close()
+        except ValueError:
+            pass
 
 
     def retranslateUi(self, Dialog):
